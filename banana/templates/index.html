@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gerador e Validador de CPF e CNPJ</title>
+    <style>
+        /* Adicionamos um pouco de CSS para estilizar a navbar */
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{{ url_for('gerar_cpf') }}">Gerar CPF</a>
+        <a href="{{ url_for('gerar_cnpj') }}">Gerar CNPJ</a>
+        <a href="{{ url_for('validar_cpf') }}">Validar CPF</a>
+        <a href="{{ url_for('validar_cnpj') }}">Validar CNPJ</a>
+    </nav>
+    <h1>Gerador e Validador de CPF e CNPJ</h1>
+</body>
+</html>
