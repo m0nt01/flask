@@ -1,6 +1,8 @@
 {% extends "base.html" %}
-{% block title %} Produto {% enblock %}
+
+{% block title %} Produto {% endblock %}
 {% block content %}
 <h1>{{produto.nome}}</h1>
-<p>{{produto.descricao}}</p>
-{% enblock %}
+<p>{{produto.descricao}}</p> <br>
+<img src="{{ produto.imagem }}" alt=""> <br>
+{% endblock %}  

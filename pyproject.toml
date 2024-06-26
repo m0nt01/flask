@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "flaskus"
+version = "0.1.0"
+description = "aprendendo flask"
+authors = ["m0nt01"]
+license = "none"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+flask = "^3.0.3"
+validate-docbr = "^1.10.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

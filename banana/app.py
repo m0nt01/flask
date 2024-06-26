@@ -1,47 +1,55 @@
+import csv
 from flask import Flask , render_template , request, redirect, url_for
 from validate_docbr import CPF, CNPJ
-lista_produtos = [
-        {"nome": "Coca-cola" , "descricao":"Bom" , "preco" : "5,00"},
-        {"nome": "Pepsi" , "descricao":"Ruim" , "preco" : "2,50"},
-        {"nome": "Dolly" , "descricao":"Custo beneficios" , "preco" : "3,00"},
-    ]
-
 app = Flask(__name__)
-
+def load_products_from_csv():
+    lista_produtos = []
+    with open('produtos.csv', 'r') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            lista_produtos.append(row)
+    return lista_produtos
 @app.route("/home")
 def home(): 
     return '<h1>Home</h1>'
 
 @app.route("/contato")
 def contato(): 
-    return "Produto não existe!"
     return '<h1>Contato</h1>'
 
+
+
+# Save products to CSV file
+def save_products_to_csv(lista_produtos):
+    with open('produtos.csv', 'w', newline='') as csvfile:
+        fieldnames = ['nome', 'descricao', 'preco', 'imagem']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for produto in lista_produtos:
+            writer.writerow(produto)
+
+# Initial load of products
+lista_produtos = load_products_from_csv()
+
 @app.route("/produtos")
-def lista_produtos():
-    return render_template("produtos.html", produtos = lista_produtos)
- 
-@app.route("/produtos/home/<nome>")
-def produto(nome):
-    for produto in lista_produtos:
-        if produto("nome") == nome:
-            return render_template("produto.html", produto=produto)
-    
-    return "Produto não existe!"
+def produtos():
+    return render_template("produtos.html", produtos=lista_produtos)
 
 @app.route("/produtos/cadastro")
 def cadastro_produto():
     return render_template("cadastro-produto.html")
 
-
-@app.route("/produtos", methods=['POST'])
+@app.route("/produtos", methods=["POST"])
 def salvar_produto():
-    request.form['nome']
-    descricao = request.form['descricao']
-    produto = { "nome": nome, "descricao":descricao }
+    nome = request.form["nome"]
+    descricao = request.form["descricao"]
+    preco = request.form["preco"]
+    imagem = request.form["imagem"]
+    produto = {"nome": nome, "descricao": descricao, "preco": preco, "imagem": imagem}
     lista_produtos.append(produto)
-
+    save_products_to_csv(lista_produtos)
     return redirect(url_for("produtos"))
+
 
 @app.route('/')
 def index():
